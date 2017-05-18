@@ -2,7 +2,7 @@
  * Created by akramabdulrahman on 5/18/17.
  */
 import React from 'react';
-import $ from "jquery";
+import axios from "axios";
 
 class ColoredHead extends React.Component {
     constructor(props) {
@@ -13,9 +13,12 @@ class ColoredHead extends React.Component {
     }
 
     initData() {
-        return $.get('http://www.colr.org/json/color/random')
-            .then((data) => {
-                this.setState({color: JSON.parse(data).colors[0].hex});
+        return axios.get('http://www.colr.org/json/color/random')
+            .then((response) => {
+                this.setState({color: (response).data.colors.pop().hex});
+            })
+            .catch((error) => {
+                console.log(error);
             });
     }
 
